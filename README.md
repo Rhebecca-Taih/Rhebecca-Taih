@@ -11,8 +11,8 @@
 <div align="center">
   <br>
   <img align="center" height="150" src="https://i.imgur.com/MPZ5S7V.png" />
+  <br>
   <samp>
-      <br>
       Hi! I'm <b>𖹭Rhebecca Tainara𖹭</b>
   </samp>
 </div>
@@ -33,17 +33,17 @@
 <br>
       
 <div align="center">
-  <img height="180em" src="http://github-profile-summary-cards.vercel.app/api/cards/stats?username=Rhebecca-Taih&theme=jolly"/>
-  <img height="180em" src="http://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=Rhebecca-Taih&theme=jolly"/>
+  <img height="180" src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=Rhebecca-Taih&theme=jolly"/>
+  <img height="180" src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=Rhebecca-Taih&theme=jolly"/>
   <br>
   <br>
-  <img align="center" alt="Profile Summary" src="http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Rhebecca-Taih&theme=jolly"/>
+  <img align="center" alt="Profile Summary" src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Rhebecca-Taih&theme=jolly"/>
 </div>
 
 <div align="center" style="display: inline_block"><br>
-  <img width="40" src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/Python-Dark.svg">
-  <img width="40" src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/Git.svg">
-  <img width="40" src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/Github-Dark.svg">
+  <img height="40" src="https://i.imgur.com/GVo3aoI.png">
+  <img height="40" src="https://i.imgur.com/rGkViny.png">
+  <img height="40" src="https://i.imgur.com/ijWnptg.png">
 </div>
 
 <br>
@@ -65,10 +65,10 @@
   <br>
   <br>
 
-  <a href="link"><img src="https://img.shields.io/badge/Gmail-000000?style=for-the-badge&logo=gmail&logoColor=deaaf9"/></a>
-  <a href="link"><img src="https://img.shields.io/badge/Instagram-000000?style=for-the-badge&logo=instagram&logoColor=deaaf9"/></a>
-  <a href="link"><img src="https://img.shields.io/badge/LinkedIn-000000?style=for-the-badge&logo=linkedin&logoColor=deaaf9"/></a>
-                                                                                                                                        
+  <a href="mailto:rhebeccatainara4@gmail.com"><img src="https://img.shields.io/badge/Gmail-000000?style=for-the-badge&logo=gmail&logoColor=deaaf9"/></a>
+  <a href="https://instagram.com/seu_perfil"><img src="https://img.shields.io/badge/Instagram-000000?style=for-the-badge&logo=instagram&logoColor=deaaf9"/></a>
+  <a href="https://linkedin.com/in/rhebecca-tainara"><img src="https://img.shields.io/badge/LinkedIn-000000?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2RlYWFmOSI+PHBhdGggZD0iTTE5IDBINTZDMi4yIDAgMCAyLjIgMCA1djE0YzAgMi44IDIuMiA1IDUgNWgxNGMyLjggMCA1LTIuMiA1LTVWNUMyNCAyLjIgMjEuOCAwIDE5IDB6TTcgMTloLTN2LTdoM3Y3em0tMS41LTguMmMtMSAwLTEuOC0uOC0xLjgtMS44cy44LTEuOCAxLjgtMS44IDEuOC44IDEuOCAxLjgtLjggMS44LTEuOCAxLjh6TTE5IDE5aC0zdi00LjdjMC0xLjEtLjktMi0yLTJzLTIgLjktMiAydjQuN2gtM3YtN2gzdjEuMWMuOC0uOCAxLjktMS4yIDMtMS4yIDIgMCA0IDEuNiA0IDR2NS4xeiIvPjwvc3ZnPg=="/></a>
+                                                                                                                                                                                                                                  
 </div>
 
 <div align="center">
