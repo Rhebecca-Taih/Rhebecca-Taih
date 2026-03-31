@@ -66,7 +66,7 @@
   <br>
 
   <a href="mailto:rhebeccatainara4@gmail.com"><img src="https://img.shields.io/badge/Gmail-000000?style=for-the-badge&logo=gmail&logoColor=deaaf9"/></a>
-  <a href="https://instagram.com/seu_perfil"><img src="https://img.shields.io/badge/Instagram-000000?style=for-the-badge&logo=instagram&logoColor=deaaf9"/></a>
+  <a href="https://instagram.com/rhebecctaih"><img src="https://img.shields.io/badge/Instagram-000000?style=for-the-badge&logo=instagram&logoColor=deaaf9"/></a>
   <a href="https://linkedin.com/in/rhebecca-tainara"><img src="https://img.shields.io/badge/LinkedIn-000000?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2RlYWFmOSI+PHBhdGggZD0iTTE5IDBINTZDMi4yIDAgMCAyLjIgMCA1djE0YzAgMi44IDIuMiA1IDUgNWgxNGMyLjggMCA1LTIuMiA1LTVWNUMyNCAyLjIgMjEuOCAwIDE5IDB6TTcgMTloLTN2LTdoM3Y3em0tMS41LTguMmMtMSAwLTEuOC0uOC0xLjgtMS44cy44LTEuOCAxLjgtMS44IDEuOC44IDEuOCAxLjgtLjggMS44LTEuOCAxLjh6TTE5IDE5aC0zdi00LjdjMC0xLjEtLjktMi0yLTJzLTIgLjktMiAydjQuN2gtM3YtN2gzdjEuMWMuOC0uOCAxLjktMS4yIDMtMS4yIDIgMCA0IDEuNiA0IDR2NS4xeiIvPjwvc3ZnPg=="/></a>
                                                                                                                                                                                                                                   
 </div>
