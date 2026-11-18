@@ -1,0 +1,236 @@
+{
+  "usuario": "Rhebecca-Taih",
+  "saudacao": "Hi! I'm Rhebecca",
+  "subtitulo": "Ciência da Computação  ·  Sorocaba/SP",
+  "frases": [
+    "Hello! Welcome to my world!",
+    "I'm a Computer Science Student!",
+    "I love black, purple, cats, and codes!"
+  ],
+  "textos": {
+    "saudacao": "Hi! I’m",
+    "nome": "Rhebecca",
+    "boasVindas": "Aqui tem meus projetos, o que eu estou estudando e um pouquinho de mim.",
+    "sobre": [
+      "Estudante de CiComp",
+      "Moro em Sorocaba",
+      "Escritora em segundo plano",
+      "Amo programar porque posso criar coisas novas (é por isso que escrevo também)",
+      "Amo a arte, coisas roxas, animes, games, gatos e a Kuromi!",
+      "Amo conversar sobre tudo"
+    ],
+    "kuromi": {
+      "titulo": "Cooking for Kuromi",
+      "subtitulo": "cada commit vira um lanchinho ♡"
+    },
+    "codigo": [
+      [
+        [
+          "class ",
+          "kw"
+        ],
+        [
+          "Rhebecca",
+          "fn"
+        ],
+        [
+          ":",
+          "pont"
+        ]
+      ],
+      [
+        [
+          "    curso ",
+          "nome"
+        ],
+        [
+          "= ",
+          "pont"
+        ],
+        [
+          "\"Ciência da Computação\"",
+          "str"
+        ]
+      ],
+      [
+        [
+          "    stack ",
+          "nome"
+        ],
+        [
+          "= ",
+          "pont"
+        ],
+        [
+          "[\"Python\", \"C#\", \"React\"]",
+          "str"
+        ]
+      ],
+      [
+        [
+          "    ama ",
+          "nome"
+        ],
+        [
+          "= ",
+          "pont"
+        ],
+        [
+          "[\"games\", \"gatos\", \"Kuromi\"]",
+          "str"
+        ]
+      ],
+      [
+        [
+          "",
+          "nome"
+        ]
+      ],
+      [
+        [
+          "    def ",
+          "kw"
+        ],
+        [
+          "status",
+          "fn"
+        ],
+        [
+          "(",
+          "pont"
+        ],
+        [
+          "self",
+          "kw"
+        ],
+        [
+          "):",
+          "pont"
+        ]
+      ],
+      [
+        [
+          "        return ",
+          "kw"
+        ],
+        [
+          "\"codando todo dia ✦\"",
+          "str"
+        ]
+      ]
+    ],
+    "comando": "Rhebecca().status()",
+    "resposta": "'codando todo dia ✦'",
+    "estudandoSub": "um pouquinho todo dia ♡",
+    "estudando": [
+      "Python",
+      "C#",
+      "React"
+    ],
+    "rodape": "Made by Rhebecca ⋆",
+    "ouvindo": {
+      "musica": "Caramel",
+      "artista": "Sleep Token"
+    },
+    "jogando": {
+      "jogo": "League of Legends",
+      "plataforma": "LoL · PC"
+    }
+  },
+  "contatos": [
+    {
+      "id": "linkedin",
+      "rotulo": "LinkedIn",
+      "link": "https://linkedin.com/in/rhebecca-tainara"
+    },
+    {
+      "id": "gmail",
+      "rotulo": "Gmail",
+      "link": "mailto:rhebeccatainara4@gmail.com"
+    },
+    {
+      "id": "instagram",
+      "rotulo": "Instagram",
+      "link": "https://instagram.com/rhebecctaih"
+    }
+  ],
+  "destaques": [
+    "Python",
+    "C#",
+    "JavaScript",
+    "React",
+    "Supabase"
+  ],
+  "stack": [
+    {
+      "grupo": "Linguagens",
+      "itens": [
+        "Python",
+        "C#",
+        "JavaScript",
+        "SQL"
+      ]
+    },
+    {
+      "grupo": "Web e apps",
+      "itens": [
+        "React",
+        "Vite",
+        "HTML",
+        "CSS",
+        "PWA"
+      ]
+    },
+    {
+      "grupo": "Dados e nuvem",
+      "itens": [
+        "Supabase",
+        "Cloudflare",
+        "GitHub Actions"
+      ]
+    },
+    {
+      "grupo": "Automação",
+      "itens": [
+        "Selenium",
+        "pandas",
+        "win32com",
+        "Telegram"
+      ]
+    }
+  ],
+  "projetos": [
+    {
+      "id": "planejador",
+      "nome": "Planejador Financeiro",
+      "status": "no ar",
+      "descricao": "App de finanças pessoais para o celular e o PC, com demonstração ao vivo.",
+      "tecnologias": "React · Vite · Supabase",
+      "link": "https://github.com/Rhebecca-Taih/planejador-financeiro-vitrine"
+    },
+    {
+      "id": "arcano",
+      "nome": "Arcano",
+      "status": "no ar",
+      "descricao": "App de estudos de lógica, Python e C#, com o código rodando de verdade no navegador.",
+      "tecnologias": "React · Pyodide · .NET WebAssembly",
+      "link": "https://arcano.bheccstaih.workers.dev"
+    },
+    {
+      "id": "vagas",
+      "nome": "Bot de vagas",
+      "status": "em uso",
+      "descricao": "Busca vagas de estágio e júnior em TI, filtra pelo perfil e avisa no Telegram.",
+      "tecnologias": "Python · GitHub Actions · Telegram",
+      "link": "https://github.com/Rhebecca-Taih/vagas-bot"
+    },
+    {
+      "id": "rfid",
+      "nome": "Robôs RFID",
+      "status": "concluído",
+      "descricao": "Robôs que automatizam as operações de um setor de etiquetas RFID.",
+      "tecnologias": "Python · Selenium · pandas · win32com",
+      "link": "https://github.com/Rhebecca-Taih/RFID"
+    }
+  ]
+}
