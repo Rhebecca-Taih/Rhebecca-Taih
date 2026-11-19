@@ -116,7 +116,9 @@ export function gerarBento({ dados, r, CARDS, writeFileSync, perfil }) {
 
   // ── hero ──
   const boasVindas = quebrar(T.boasVindas, 46);
-  const barras = [0, 1, 2].map((i) => `<rect x="${60 + i * 66}" y="${P + 290}" width="56" height="7" rx="3.5" fill="${B.branco}" opacity="0.4"/><rect x="${60 + i * 66}" y="${P + 290}" width="56" height="7" rx="3.5" fill="${B.branco}" opacity="0"><animate attributeName="opacity" values="${[0, 1, 2].map((k) => (k === i ? 1 : 0)).join(';')};${i === 0 ? 1 : 0}" keyTimes="0;0.333;0.666;1" calcMode="discrete" dur="9s" repeatCount="indefinite"/></rect>`).join('');
+  const nFrases = perfil.frases.length, cicloFrases = nFrases * 4.5;
+  const chavesBarras = [...Array(nFrases).keys()].map((k) => (k / nFrases).toFixed(4)).concat('1').join(';');
+  const barras = [...Array(nFrases).keys()].map((i) => `<rect x="${60 + i * 66}" y="${P + 290}" width="56" height="7" rx="3.5" fill="${B.branco}" opacity="0.4"/><rect x="${60 + i * 66}" y="${P + 290}" width="56" height="7" rx="3.5" fill="${B.branco}" opacity="${i === 0 ? 1 : 0}"><animate attributeName="opacity" values="${[...Array(nFrases).keys()].map((k) => (k === i ? 1 : 0)).join(';')};${i === 0 ? 1 : 0}" keyTimes="${chavesBarras}" calcMode="discrete" dur="${cicloFrases}s" repeatCount="indefinite"/></rect>`).join('');
   escrever('hero', svg(860, 330 + P * 2, `
 <rect x="2" y="${P + 30}" width="856" height="300" rx="34" fill="url(#gRoxo)" filter="url(#sombra)"/>
 <g clip-path="url(#hero-c)"><circle cx="720" cy="${P + 300}" r="190" fill="${B.lavanda}" opacity="0.12"/><circle cx="90" cy="${P + 50}" r="120" fill="${B.lavanda}" opacity="0.06"/></g>
