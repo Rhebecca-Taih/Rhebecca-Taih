@@ -20,9 +20,9 @@ TEMPO_MINIMO = 2600
 QUADROS_TRANSICAO = 7
 QUALIDADE = {"humor": 80}
 GIF_DA_EXPRESSAO = {
-    "dormindo": "01-dormindo", "chorando": "02-chorando", "surpresa": "04-assustada", "cafezinho": "05-cafe",
-    "debochada": "06-pensativa", "pensativa": "08-curiosa", "carinhosa": "09-abraco",
-    "comemorando": "11-comemorando", "piscadinha": "12-piscadinha",
+    "dormindo": "01-dormindo", "chorando": "02-chorando", "programando": "03-programando", "surpresa": "04-assustada",
+    "cafezinho": "05-cafe", "debochada": "06-pensativa", "feliz": "07-feliz", "pensativa": "08-curiosa",
+    "carinhosa": "09-abraco", "irritada": "10-irritada", "comemorando": "11-comemorando", "piscadinha": "12-piscadinha",
 }
 EDGE = next(p for p in [Path(r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"),
                         Path(r"C:\Program Files\Microsoft\Edge\Application\msedge.exe")] if p.exists())

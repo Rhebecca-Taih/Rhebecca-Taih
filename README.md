@@ -11,7 +11,7 @@
   <br><br><br>
   <a name="code"></a>
   <img src="cards/bento-titulo-code.svg" width="100%" alt="Code"/>
-  <img src="cards/bento-code.svg" width="100%" alt="rhebecca.py e Agora estudando"/>
+  <img src="cards/bento-code-terminal.svg" width="59.5%" alt="rhebecca.py"/><img src="cards/animado-code-estudando.webp" width="40.4%" alt="Agora estudando"/>
   <img src="cards/bento-stack.svg" width="100%" alt="Stack e linguagens"/>
   <img src="cards/bento-kuromi.svg" width="100%" alt="Cooking for Kuromi"/>
   <br><br><br>

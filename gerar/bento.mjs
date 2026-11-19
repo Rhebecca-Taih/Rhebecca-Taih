@@ -291,6 +291,18 @@ ${cartao(522, P, 336, 292)}
 <text x="546" y="${P + 72}" fill="${B.tinta}" font-family="${FONTE}" font-size="13">${esc(T.estudandoSub)}</text>
 ${estudo}
 ${img('programando', 680, P + 104, 170, 182)}`));
+  escrever('code-terminal', svg(512, 292 + P * 2, `
+${cartao(2, P, 500, 292, 'escuro')}
+<circle cx="30" cy="${P + 28}" r="7" fill="#ff6b9a"/><circle cx="52" cy="${P + 28}" r="7" fill="#ffd36b"/><circle cx="74" cy="${P + 28}" r="7" fill="${B.verde}"/>
+<text x="252" y="${P + 33}" text-anchor="middle" fill="${B.suave}" font-family="${MONO}" font-size="13">rhebecca.py</text>
+${img('kuromi-estrela', 452, P + 4, 34, 44, 'xMidYMid')}
+<line x1="2" y1="${P + 52}" x2="502" y2="${P + 52}" stroke="${B.borda}"/>
+${codigo}
+${terminal}`));
+  fundo('code-estudando', 348, 292 + P * 2, `<g transform="translate(-512 0)">${cartao(522, P, 336, 292)}
+<text x="546" y="${P + 46}" fill="${B.roxo1}" font-family="${FONTE}" font-size="24" font-weight="800">Agora estudando</text>
+<text x="546" y="${P + 72}" fill="${B.tinta}" font-family="${FONTE}" font-size="13">${esc(T.estudandoSub)}</text>
+${estudo}</g>`, [{ tipo: 'gif', nome: 'programando', caixa: [168, P + 104, 170, 182] }]);
 
   // ── stack e atividade ──
   const grupos = perfil.stack.map((g, i) => {
