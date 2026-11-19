@@ -139,8 +139,11 @@ def main():
                         saida.append((Image.blend(a, b, i / (QUADROS_TRANSICAO + 1)), 50))
             destino = CARDS / f"animado-{anim['nome']}.webp"
             imagens = [q for q, _ in saida]
-            imagens[0].save(destino, save_all=True, append_images=imagens[1:], duration=[t for _, t in saida],
-                            loop=0, quality=QUALIDADE.get(anim['nome'], 88), method=6, alpha_quality=85)
+            if anim["nome"] in QUALIDADE:
+                opcoes = dict(quality=QUALIDADE[anim["nome"]], method=6, alpha_quality=85)
+            else:
+                opcoes = dict(lossless=True, quality=100, method=4)
+            imagens[0].save(destino, save_all=True, append_images=imagens[1:], duration=[t for _, t in saida], loop=0, **opcoes)
             print(destino.name, imagens[0].size, len(imagens), "quadros", round(destino.stat().st_size / 1024), "KB")
 
 
