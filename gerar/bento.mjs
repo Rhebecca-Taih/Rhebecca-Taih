@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync as gravar } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -20,8 +20,8 @@ const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 const cache = {};
 const dado = (nome) => (cache[nome] ??= `data:image/webp;base64,${readFileSync(join(PASTA, `${nome}.webp`)).toString('base64')}`);
 const dadoGif = (nome) => (cache[`gif-${nome}`] ??= `data:image/gif;base64,${readFileSync(join(PASTA_GIF, `${nome}.gif`)).toString('base64')}`);
-const animado = (nome) => existsSync(join(PASTA_GIF, `chibi-${nome}.gif`));
-const fonte = (nome, mini = false) => (animado(nome) ? dadoGif(`chibi-${nome}${mini ? '-mini' : ''}`) : dado(nome));
+const fonte = (nome) => dado(nome);
+const PASTA_FUNDOS = join(AQUI, 'fundos');
 const img = (nome, x, y, w, h, alinhar = 'xMidYMax') => `<image href="${fonte(nome)}" x="${x}" y="${y}" width="${w}" height="${h}" preserveAspectRatio="${alinhar} meet"/>`;
 const gif = (nome, x, y, w, h) => `<image href="${dadoGif(nome)}" x="${x}" y="${y}" width="${w}" height="${h}" preserveAspectRatio="xMidYMid meet"/>`;
 const svg = (w, h, corpo, defs = '') => `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><defs>
@@ -74,7 +74,7 @@ function quebrar(texto, porLinha) {
 function avatarRedondo(nome, cx, cy, r, id, online = true) {
   const w = r * 3, h = r * 3.4;
   return `<clipPath id="${id}"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath><circle cx="${cx}" cy="${cy}" r="${r + 2}" fill="${B.claro2}"/>
-<image href="${fonte(nome, true)}" x="${cx - w / 2}" y="${cy - h * (animado(nome) ? 0.64 : 0.56)}" width="${w}" height="${h}" preserveAspectRatio="xMidYMid meet" clip-path="url(#${id})"/>
+<image href="${fonte(nome)}" x="${cx - w / 2}" y="${cy - h * 0.56}" width="${w}" height="${h}" preserveAspectRatio="xMidYMid meet" clip-path="url(#${id})"/>
 ${online ? `<circle cx="${cx + r * 0.72}" cy="${cy + r * 0.72}" r="${r * 0.3}" fill="${B.verde}" stroke="${B.branco}" stroke-width="2"/>` : ''}`;
 }
 
@@ -85,12 +85,21 @@ export function gerarBento({ dados, r, CARDS, writeFileSync, perfil }) {
   const hoje = new Date();
   const escrever = (nome, conteudo) => writeFileSync(join(CARDS, `bento-${nome}.svg`), conteudo);
   const T = perfil.textos;
+  const animacoes = [];
+  mkdirSync(PASTA_FUNDOS, { recursive: true });
+  const fundo = (nome, w, h, tras, camadas, frente = '', defs = '') => {
+    gravar(join(PASTA_FUNDOS, `${nome}.svg`), svg(w, h, tras, defs));
+    if (frente) gravar(join(PASTA_FUNDOS, `${nome}-frente.svg`), svg(w, h, frente, defs));
+    animacoes.push({ nome, w, h, frente: !!frente, camadas });
+  };
 
   // ── topo e abas ──
-  escrever('topo-perfil', svg(500, 72, `
-${avatarRedondo('piscadinha', 34, 36, 26, 'tp-av')}
-<text x="72" y="32" fill="${B.branco}" font-family="${FONTE}" font-size="18" font-weight="800">Rhebecca</text>
-<text x="72" y="52" fill="${B.suave}" font-family="${FONTE}" font-size="12">@${esc(perfil.usuario)} · online</text>`));
+  const textoTopo = `<text x="72" y="32" fill="${B.branco}" font-family="${FONTE}" font-size="18" font-weight="800">Rhebecca</text>
+<text x="72" y="52" fill="${B.suave}" font-family="${FONTE}" font-size="12">@${esc(perfil.usuario)} · online</text>`;
+  escrever('topo-perfil', svg(500, 72, `${avatarRedondo('piscadinha', 34, 36, 26, 'tp-av')}${textoTopo}`));
+  fundo('topo', 500, 72, `<circle cx="34" cy="36" r="28" fill="${B.claro2}"/>${textoTopo}`,
+    [{ tipo: 'gif', nome: 'piscadinha', caixa: [34 - 39, 36 - 88.4 * 0.64, 78, 88.4], circulo: [34, 36, 26] }],
+    `<circle cx="${34 + 26 * 0.72}" cy="${36 + 26 * 0.72}" r="${26 * 0.3}" fill="${B.verde}" stroke="${B.branco}" stroke-width="2"/>`);
   for (const [id, rotulo] of [['home', 'Home'], ['about', 'About'], ['code', 'Code'], ['projects', 'Projects']]) {
     escrever(`aba-${id}`, svg(96, 72, id === 'home'
       ? `<rect x="6" y="22" width="84" height="28" rx="6" fill="${B.roxo1}"/><text x="48" y="42" text-anchor="middle" fill="${B.branco}" font-family="${FONTE}" font-size="15" font-weight="700">${rotulo}</text>`
@@ -130,7 +139,8 @@ ${estrela(536, P + 70, 10, 0)}${estrela(842, P + 110, 7, 0.8)}${estrela(820, P +
       const x = 648 + 22 + (i % 2) * 88, y = P + 58 + Math.floor(i / 2) * passoY + (passoY - 92) / 2;
       return `${img(n, x, y, 78, 60, 'xMidYMid')}<text x="${x + 39}" y="${y + 80}" text-anchor="middle" fill="${B.tinta}" font-family="${FONTE}" font-size="13" font-weight="700">${t}</text>`;
     }).join('');
-  escrever('sobre', svg(860, alturaSobre + P * 2, `
+  const hS = alturaSobre + P * 2;
+  escrever('sobre', svg(860, hS, `
 ${cartao(2, P, 396, alturaSobre)}
 <text x="24" y="${P + 50}" fill="${B.roxo1}" font-family="${FONTE}" font-size="26" font-weight="800">quem sou eu</text>
 <text x="374" y="${P + 48}" text-anchor="end" fill="${B.tinta}" font-family="${FONTE}" font-size="15">わたし ♡</text>
@@ -142,6 +152,18 @@ ${trocaImagens(['feliz', 'debochada', 'irritada', 'chorando', 'surpresa'], 428, 
 ${cartao(648, P, 210, alturaSobre)}
 <text x="753" y="${P + 36}" text-anchor="middle" fill="${B.roxo1}" font-family="${FONTE}" font-size="16" font-weight="800">eu amo ♡</text>
 ${amo}`));
+  escrever('sobre-texto', svg(410, hS, `
+${cartao(2, P, 396, alturaSobre)}
+<text x="24" y="${P + 50}" fill="${B.roxo1}" font-family="${FONTE}" font-size="26" font-weight="800">quem sou eu</text>
+<text x="374" y="${P + 48}" text-anchor="end" fill="${B.tinta}" font-family="${FONTE}" font-size="15">わたし ♡</text>
+<line x1="2" y1="${P + 68}" x2="398" y2="${P + 68}" stroke="${B.borda}" stroke-width="2"/>
+${topicos}`));
+  fundo('humor', 220, hS, `${cartao(8, P, 210, alturaSobre)}
+<text x="113" y="${P + 36}" text-anchor="middle" fill="${B.roxo1}" font-family="${FONTE}" font-size="16" font-weight="800">humor de hoje</text>`,
+    [{ tipo: 'sequencia', nomes: ['feliz', 'debochada', 'irritada', 'chorando', 'surpresa'], caixa: [18, P + 50, 190, alturaSobre - 62] }]);
+  escrever('sobre-amo', svg(230, hS, `${cartao(18, P, 210, alturaSobre)}
+<text x="123" y="${P + 36}" text-anchor="middle" fill="${B.roxo1}" font-family="${FONTE}" font-size="16" font-weight="800">eu amo ♡</text>
+<g transform="translate(-630 0)">${amo}</g>`));
 
   // ── dia ──
   const dia = hoje.getDate(), mes = MESES[hoje.getMonth()], semana = hoje.getDay();
@@ -161,6 +183,24 @@ ${cartao(648, P, 210, 190, 'roxo')}
 <text x="674" y="${P + 90}" fill="${B.claro}" font-family="${FONTE}" font-size="14">dia${r.atual === 1 ? '' : 's'} seguido${r.atual === 1 ? '' : 's'}</text>
 <text x="674" y="${P + 110}" fill="${B.claro}" font-family="${FONTE}" font-size="14">codando</text>
 ${img('kuromi-cristal', 770, P + 82, 72, 100)}`));
+  const hD = 190 + P * 2;
+  escrever('dia-data', svg(410, hD, `
+${cartao(2, P, 396, 190, 'roxo')}
+<text x="30" y="${P + 72}" fill="${B.branco}" font-family="${FONTE}" font-size="56" font-weight="700">${dia}</text>
+<text x="32" y="${P + 104}" fill="${B.branco}" font-family="${FONTE}" font-size="24" font-weight="500">${mes}</text>
+<text x="30" y="${P + 166}" fill="${B.branco}" font-family="'Yu Gothic','Meiryo','MS Gothic',sans-serif" font-size="50" font-weight="700">${DIAS_KANJI[semana]}</text>
+<text x="96" y="${P + 158}" fill="${B.claro}" font-family="${FONTE}" font-size="15">${DIAS[semana]} · ${hoje.getFullYear()}</text>
+${img('lua', 300, P + 26, 66, 60, 'xMidYMid')}
+${pontinhos(318, P + 158)}`));
+  fundo('dia-kuromi', 220, hD, `${cartao(8, P, 210, 190)}
+${estrela(36, P + 34, 7, 0.3, B.roxo1)}${estrela(192, P + 150, 6, 1.1, B.roxo1)}`,
+    [{ tipo: 'gif', nome: 'kuromi-dormindo-giphy', caixa: [33, P + 12, 160, 166] }]);
+  escrever('dia-seguidos', svg(230, hD, `
+${cartao(18, P, 210, 190, 'roxo')}
+<text x="42" y="${P + 64}" fill="${B.branco}" font-family="${FONTE}" font-size="44" font-weight="800">${r.atual}</text>
+<text x="44" y="${P + 90}" fill="${B.claro}" font-family="${FONTE}" font-size="14">dia${r.atual === 1 ? '' : 's'} seguido${r.atual === 1 ? '' : 's'}</text>
+<text x="44" y="${P + 110}" fill="${B.claro}" font-family="${FONTE}" font-size="14">codando</text>
+${img('kuromi-cristal', 140, P + 82, 72, 100)}`));
 
   // ── ouvindo e jogando agora ──
   const ouvindo = T.ouvindo, jogando = T.jogando;
@@ -354,21 +394,26 @@ ${comidas}
   const ROSTO = { planejador: 'cafezinho', arcano: 'pensativa', vagas: 'dormindo', rfid: 'comemorando' };
   for (const p of perfil.projetos) {
     const tamanho = p.nome.length > 16 ? 15 : 17;
-    escrever(`projeto-${p.id}`, svg(212, 270 + P * 2, `
+    const rosto = ROSTO[p.id] || 'piscadinha';
+    const corpo = (comRosto) => `
 ${cartao(8, P, 196, 270)}
 <rect x="22" y="${P + 14}" width="${p.status.length * 7.6 + 22}" height="24" rx="12" fill="${B.roxo1}"/><text x="33" y="${P + 30}" fill="${B.branco}" font-family="${FONTE}" font-size="12" font-weight="700">${esc(p.status)}</text>
-${img(ROSTO[p.id] || 'piscadinha', 24, P + 44, 164, 170, 'xMidYMid')}
+${comRosto ? img(rosto, 24, P + 44, 164, 170, 'xMidYMid') : ''}
 <line x1="30" y1="${P + 222}" x2="182" y2="${P + 222}" stroke="${B.suave}" stroke-width="1.5"/>
-<text x="106" y="${P + 250}" text-anchor="middle" fill="${B.roxo1}" font-family="${FONTE}" font-size="${tamanho}" font-weight="800">${esc(p.nome)}</text>`));
+<text x="106" y="${P + 250}" text-anchor="middle" fill="${B.roxo1}" font-family="${FONTE}" font-size="${tamanho}" font-weight="800">${esc(p.nome)}</text>`;
+    escrever(`projeto-${p.id}`, svg(212, 270 + P * 2, corpo(true)));
+    fundo(`projeto-${p.id}`, 212, 270 + P * 2, corpo(false), [{ tipo: 'gif', nome: rosto, caixa: [24, P + 44, 164, 170] }]);
   }
 
   // ── view more e contato ──
-  escrever('ver-mais', svg(860, 84 + P * 2, `
+  const verMais = (comGif) => `
 ${cartao(2, P, 856, 84, 'roxo', 42)}
 <text x="40" y="${P + 54}" fill="${B.branco}" font-family="${FONTE}" font-size="30" font-weight="800">View More</text>
 <text x="210" y="${P + 53}" fill="${B.claro}" font-family="${FONTE}" font-size="15">redes sociais e contato ✦</text>
-${gif('kitty-brava', 650, P + 4, 76, 76)}${img('bruxa-bola-cristal', 740, P + 8, 60, 70, 'xMidYMid')}
-<g transform="translate(814 ${P + 42})"><circle r="20" fill="${B.branco}"><animate attributeName="r" values="20;22;20" dur="1.6s" repeatCount="indefinite"/></circle><path d="M-4 -8 L5 0 L-4 8" fill="none" stroke="${B.roxo1}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>`));
+${comGif ? gif('kitty-brava', 650, P + 4, 76, 76) : ''}${img('bruxa-bola-cristal', 740, P + 8, 60, 70, 'xMidYMid')}
+<g transform="translate(814 ${P + 42})"><circle r="20" fill="${B.branco}"><animate attributeName="r" values="20;22;20" dur="1.6s" repeatCount="indefinite"/></circle><path d="M-4 -8 L5 0 L-4 8" fill="none" stroke="${B.roxo1}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+  escrever('ver-mais', svg(860, 84 + P * 2, verMais(true)));
+  fundo('ver-mais', 860, 84 + P * 2, verMais(false), [{ tipo: 'gif', nome: 'kuromi-brava-giphy', caixa: [650, P + 4, 76, 76] }]);
 
   const ICONES = {
     linkedin: `<rect x="-11" y="-11" width="22" height="22" rx="4" fill="${B.roxo1}"/><text x="0" y="6" text-anchor="middle" fill="${B.branco}" font-family="${FONTE}" font-size="14" font-weight="800">in</text>`,
@@ -389,4 +434,5 @@ ${avatares}${icones}
 ${cartao(562, P, 296, 62, 'roxo', 31)}
 <text x="590" y="${P + 38}" fill="${B.branco}" font-family="${FONTE}" font-size="16" font-weight="600">${esc(T.rodape)}</text>
 ${pontinhos(796, P + 32)}`));
+  gravar(join(PASTA_FUNDOS, 'animacoes.json'), JSON.stringify(animacoes, null, 2));
 }
