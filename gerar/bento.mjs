@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, writeFileSync as gravar } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync as gravar } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -22,7 +22,15 @@ const dado = (nome) => (cache[nome] ??= `data:image/webp;base64,${readFileSync(j
 const dadoGif = (nome) => (cache[`gif-${nome}`] ??= `data:image/gif;base64,${readFileSync(join(PASTA_GIF, `${nome}.gif`)).toString('base64')}`);
 const fonte = (nome) => dado(nome);
 const PASTA_FUNDOS = join(AQUI, 'fundos');
-const img = (nome, x, y, w, h, alinhar = 'xMidYMax') => `<image href="${fonte(nome)}" x="${x}" y="${y}" width="${w}" height="${h}" preserveAspectRatio="${alinhar} meet"/>`;
+const ELEMENTO = /^(kuromi|bruxa)|^(codigo|controle|gato-pixel|lua|brilhos|laco|coracoes)$/;
+let balancos = 0;
+const img = (nome, x, y, w, h, alinhar = 'xMidYMax') => {
+  const imagem = `<image href="${fonte(nome)}" x="${x}" y="${y}" width="${w}" height="${h}" preserveAspectRatio="${alinhar} meet"/>`;
+  if (!ELEMENTO.test(nome)) return imagem;
+  const k = balancos++, cx = x + w / 2, cy = y + h / 2, a = 4 + (k % 3);
+  const giro = `values="${-a} ${cx} ${cy};${a} ${cx} ${cy};${-a} ${cx} ${cy}" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"`;
+  return `<g>${imagem}<animateTransform attributeName="transform" type="rotate" ${giro} dur="${(2.6 + (k % 4) * 0.4).toFixed(1)}s" begin="${((k * 0.37) % 2).toFixed(2)}s" repeatCount="indefinite"/></g>`;
+};
 const gif = (nome, x, y, w, h) => `<image href="${dadoGif(nome)}" x="${x}" y="${y}" width="${w}" height="${h}" preserveAspectRatio="xMidYMid meet"/>`;
 const svg = (w, h, corpo, defs = '') => `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><defs>
 <linearGradient id="gRoxo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${B.roxo1}"/><stop offset="1" stop-color="${B.roxo2}"/></linearGradient>
@@ -403,6 +411,25 @@ ${comRosto ? img(rosto, 24, P + 44, 164, 170, 'xMidYMid') : ''}
 <text x="106" y="${P + 250}" text-anchor="middle" fill="${B.roxo1}" font-family="${FONTE}" font-size="${tamanho}" font-weight="800">${esc(p.nome)}</text>`;
     escrever(`projeto-${p.id}`, svg(212, 270 + P * 2, corpo(true)));
     fundo(`projeto-${p.id}`, 212, 270 + P * 2, corpo(false), [{ tipo: 'gif', nome: rosto, caixa: [24, P + 44, 164, 170] }]);
+  }
+
+  const destaques = perfil.projetos.filter((p) => p.destaque);
+  escrever('ver-todos', svg(860, 64 + P * 2, `
+${cartao(2, P, 856, 64, 'claro', 32)}
+<text x="40" y="${P + 40}" fill="${B.roxo1}" font-family="${FONTE}" font-size="20" font-weight="800">ver todos os projetos</text>
+<text x="270" y="${P + 39}" fill="${B.tinta}" font-family="${FONTE}" font-size="14">${dados.repos} repositórios públicos ✦</text>
+${img('bruxa-livros', 700, P + 6, 70, 52, 'xMidYMid')}
+<g transform="translate(814 ${P + 32})"><circle r="18" fill="${B.roxo1}"/><path d="M-4 -7 L4 0 L-4 7" fill="none" stroke="${B.branco}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></g>`));
+  const README = join(AQUI, '..', 'README.md');
+  if (existsSync(README)) {
+    const linhas = destaques.map((p) => {
+      const animado = existsSync(join(CARDS, `animado-projeto-${p.id}.webp`)) ? `animado-projeto-${p.id}.webp` : `bento-projeto-${p.id}.svg`;
+      return `  <a href="${p.link}"><img src="cards/${animado}" width="24%" alt="${esc(p.nome)}"/></a>`;
+    });
+    const bloco = ['<!-- projetos -->', ...linhas, '  <br><br>', `  <a href="${perfil.todosProjetos}"><img src="cards/bento-ver-todos.svg" width="100%" alt="Ver todos os projetos"/></a>`, '  <!-- /projetos -->'].join('\n');
+    const texto = readFileSync(README, 'utf8');
+    const ini = texto.indexOf('<!-- projetos -->'), fim = texto.indexOf('<!-- /projetos -->');
+    if (ini >= 0 && fim > ini) gravar(README, texto.slice(0, ini) + bloco + texto.slice(fim + '<!-- /projetos -->'.length));
   }
 
   // ── view more e contato ──

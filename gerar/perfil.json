@@ -206,7 +206,8 @@
       "status": "no ar",
       "descricao": "App de finanças pessoais para o celular e o PC, com demonstração ao vivo.",
       "tecnologias": "React · Vite · Supabase",
-      "link": "https://github.com/Rhebecca-Taih/planejador-financeiro-vitrine"
+      "link": "https://github.com/Rhebecca-Taih/planejador-financeiro-vitrine",
+      "destaque": true
     },
     {
       "id": "arcano",
@@ -214,7 +215,8 @@
       "status": "no ar",
       "descricao": "App de estudos de lógica, Python e C#, com o código rodando de verdade no navegador.",
       "tecnologias": "React · Pyodide · .NET WebAssembly",
-      "link": "https://arcano.bheccstaih.workers.dev"
+      "link": "https://arcano.bheccstaih.workers.dev",
+      "destaque": true
     },
     {
       "id": "vagas",
@@ -222,7 +224,8 @@
       "status": "em uso",
       "descricao": "Busca vagas de estágio e júnior em TI, filtra pelo perfil e avisa no Telegram.",
       "tecnologias": "Python · GitHub Actions · Telegram",
-      "link": "https://github.com/Rhebecca-Taih/vagas-bot"
+      "link": "https://github.com/Rhebecca-Taih/vagas-bot",
+      "destaque": true
     },
     {
       "id": "rfid",
@@ -230,7 +233,9 @@
       "status": "concluído",
       "descricao": "Robôs que automatizam as operações de um setor de etiquetas RFID.",
       "tecnologias": "Python · Selenium · pandas · win32com",
-      "link": "https://github.com/Rhebecca-Taih/RFID"
+      "link": "https://github.com/Rhebecca-Taih/RFID",
+      "destaque": true
     }
-  ]
+  ],
+  "todosProjetos": "https://github.com/Rhebecca-Taih?tab=repositories"
 }

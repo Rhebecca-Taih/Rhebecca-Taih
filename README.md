@@ -17,15 +17,19 @@
   <br><br><br>
   <a name="projects"></a>
   <img src="cards/bento-titulo-projects.svg" width="100%" alt="Projects"/>
+  <!-- projetos -->
   <a href="https://github.com/Rhebecca-Taih/planejador-financeiro-vitrine"><img src="cards/animado-projeto-planejador.webp" width="24%" alt="Planejador Financeiro"/></a>
   <a href="https://arcano.bheccstaih.workers.dev"><img src="cards/animado-projeto-arcano.webp" width="24%" alt="Arcano"/></a>
   <a href="https://github.com/Rhebecca-Taih/vagas-bot"><img src="cards/animado-projeto-vagas.webp" width="24%" alt="Bot de vagas"/></a>
   <a href="https://github.com/Rhebecca-Taih/RFID"><img src="cards/animado-projeto-rfid.webp" width="24%" alt="Robôs RFID"/></a>
   <br><br>
+  <a href="https://github.com/Rhebecca-Taih?tab=repositories"><img src="cards/bento-ver-todos.svg" width="100%" alt="Ver todos os projetos"/></a>
+  <!-- /projetos -->
+  <br><br>
 </div>
 
 <details>
-  <summary><picture><img src="cards/animado-ver-mais.webp" width="96%" alt="View More"/></picture></summary>
+  <summary><picture><img src="cards/animado-ver-mais.webp" width="92%" alt="View More"/></picture></summary>
   <div align="center">
     <br>
     <a href="https://linkedin.com/in/rhebecca-tainara"><img src="cards/bento-contato-linkedin.svg" width="260" alt="LinkedIn"/></a>
