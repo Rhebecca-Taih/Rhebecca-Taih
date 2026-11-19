@@ -17,7 +17,8 @@ CARDS = AQUI.parent / "cards"
 ESCALA = 2
 TEMPO_PARADO = 2600
 TEMPO_MINIMO = 2600
-QUADROS_TRANSICAO = 7
+SAIDA = [(0.96, 0.75), (0.91, 0.45), (0.86, 0.15)]
+ENTRADA = [(0.86, 0.3), (0.94, 0.65), (1.03, 0.95), (1.05, 1.0), (1.01, 1.0)]
 QUALIDADE = {"humor": 80}
 GIF_DA_EXPRESSAO = {
     "dormindo": "01-dormindo", "chorando": "02-chorando", "programando": "03-programando", "surpresa": "04-assustada",
@@ -59,9 +60,9 @@ def quadros_gif(arquivo):
     return [(q.crop(caixa), t) for q, t in quadros]
 
 
-def encaixar(figura, caixa):
+def encaixar(figura, caixa, fator=1.0):
     x, y, w, h = [v * ESCALA for v in caixa]
-    s = min(w / figura.width, h / figura.height)
+    s = min(w / figura.width, h / figura.height) * fator
     nova = figura.resize((max(1, round(figura.width * s)), max(1, round(figura.height * s))), Image.LANCZOS)
     alfa = nova.getchannel("A").filter(ImageFilter.GaussianBlur(0.8))
     nova.putalpha(ImageChops.multiply(alfa, alfa.point(lambda v: 255 if v > 40 else v * 6)))
@@ -78,9 +79,11 @@ def origem(nome, pastas):
     return [(estatica.crop(estatica.getbbox()), TEMPO_PARADO)]
 
 
-def compor(fundo, frente, figura, caixa, circulo=None):
+def compor(fundo, frente, figura, caixa, circulo=None, fator=1.0, opacidade=1.0):
     quadro = fundo.copy()
-    nova, pos = encaixar(figura, caixa)
+    nova, pos = encaixar(figura, caixa, fator)
+    if opacidade < 1:
+        nova.putalpha(nova.getchannel("A").point(lambda v: round(v * opacidade)))
     camada = Image.new("RGBA", quadro.size, (0, 0, 0, 0))
     camada.alpha_composite(nova, pos)
     if circulo:
@@ -133,10 +136,15 @@ def main():
                 for k, trecho in enumerate(trechos):
                     for q, t in trecho:
                         saida.append((compor(fundo, frente, q, camada["caixa"]), t))
-                    a = compor(fundo, frente, trecho[-1][0], camada["caixa"])
-                    b = compor(fundo, frente, trechos[(k + 1) % len(trechos)][0][0], camada["caixa"])
-                    for i in range(1, QUADROS_TRANSICAO + 1):
-                        saida.append((Image.blend(a, b, i / (QUADROS_TRANSICAO + 1)), 50))
+                    sai, entra = trecho[-1][0], trechos[(k + 1) % len(trechos)][0][0]
+                    for fator, opacidade in SAIDA:
+                        saida.append((compor(fundo, frente, sai, camada["caixa"], fator=fator, opacidade=opacidade), 40))
+                    vazio = fundo.copy()
+                    if frente is not None:
+                        vazio.alpha_composite(frente)
+                    saida.append((vazio, 90))
+                    for fator, opacidade in ENTRADA:
+                        saida.append((compor(fundo, frente, entra, camada["caixa"], fator=fator, opacidade=opacidade), 40))
             destino = CARDS / f"animado-{anim['nome']}.webp"
             imagens = [q for q, _ in saida]
             if anim["nome"] in QUALIDADE:
